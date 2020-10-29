@@ -59,23 +59,24 @@ jobs:
         sed -i '/IPERF3/{s/=n/=y/}' .config
         sed -i '/VLMCSD/{s/=n/=y/}' .config
         sed -i '/SFTP/{s/=n/=y/}' .config
-        sed -i '/HDPARM/{s/=n/=y/}' .config
-        sed -i '/PARTED/{s/=n/=y/}' .config
-        sed -i '/SMBD/{s/=n/=y/}' .config
-        sed -i '/FTPD/{s/=n/=y/}' .config
-        sed -i '/ARIA/{s/=n/=y/}' .config
-        sed -i '/SMBD_SYSLOG/{s/=y/=n/}' .config
+        #sed -i '/HDPARM/{s/=n/=y/}' .config
+        #sed -i '/PARTED/{s/=n/=y/}' .config
+        #sed -i '/SMBD/{s/=n/=y/}' .config
+        #sed -i '/FTPD/{s/=n/=y/}' .config
+        #sed -i '/ARIA/{s/=n/=y/}' .config
+        #sed -i '/SMBD_SYSLOG/{s/=y/=n/}' .config
         ######################################################################
         #以下选项是定义你需要的功能（y=集成,n=忽略），重新写入到.config文件
         ######################################################################
         echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config #SS plus+
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config #smartdns二进制文件
-        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=n" >> .config 
-        echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=n" >> .config 
-        echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config #在线文件管理服务
-        echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=n" >> .config 
+        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config 
+        echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=y" >> .config 
+        #echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config #在线文件管理服务
+        #echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=n" >> .config 
         echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config
+        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config
         #########################################################################################
         #自定义添加其它功能请参考源码configs/templates/目录下的config文件。按照上面的格式添加即可
         #格式如下：
