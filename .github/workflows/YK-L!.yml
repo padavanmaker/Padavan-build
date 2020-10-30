@@ -1,0 +1,99 @@
+#修改TNAME: K2P-5.0 中的K2P-5.0为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
+name: Build Padavan
+
+on: 
+  release:
+    types: [published]
+  push:
+    tags:
+    - 'v*'
+  #  branches: 
+  #    - master
+#  schedule:
+#    - cron: 0 8 * * 5
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd fakeroot \
+        cpio git python-docutils gettext automake autopoint texinfo build-essential help2man \
+        pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget
+    - name: Clone source code
+      run: |
+        git clone --depth=1 https://github.com/kkjoy/rt-n56u.git /opt/rt-n56u
+        cd /opt/rt-n56u/toolchain-mipsel
+        sh dl_toolchain.sh
+        mkdir -p /opt/images/
+    - name: Build Firmware
+      env:
+        TNAME: YK-L1
+      run: |
+        cd /opt/rt-n56u/trunk
+        if [ ! -f configs/templates/$TNAME.config ] ; then
+        echo "configs/templates/$TNAME.config not found "
+        exit 1
+        fi
+        cp -f configs/templates/$TNAME.config .config
+        ################################################################################################
+        #最小化系统设置
+        sed -i '/INCLUDE/{s/=y/=n/}' .config
+        sed -i '/LANG_CN/{s/=n/=y/}' .config
+        ################################################################################################
+        #删除注释以关闭更多不需要的功能支持，默认保留
+        #sed -i '/ENABLE_IPV6/{s/=y/=n/}' .config   #IPV6支持
+        #sed -i '/ENABLE_USB/{s/=y/=n/}' .config    #USB接口相关功能
+        #sed -i '/ENABLE_UFSD/{s/=y/=n/}' .config   #NTFS文件系统
+        ################################################################################################
+        #添加基础工具
+        sed -i '/_OPENSS/{s/=n/=y/}' .config
+        sed -i '/IPSET/{s/=n/=y/}' .config
+        sed -i '/CURL/{s/=n/=y/}' .config
+        sed -i '/HTOP/{s/=n/=y/}' .config
+        sed -i '/IPERF3/{s/=n/=y/}' .config
+        ################################################################################################
+        #默认扩展功能，注释以禁用
+        sed -i '/VLMCSD/{s/=n/=y/}' .config     #KMS激活服务
+        sed -i '/SFTP/{s/=n/=y/}' .config       #SFTP文件访问
+        sed -i '/HDPARM/{s/=n/=y/}' .config     #硬盘休眠
+        sed -i '/PARTED/{s/=n/=y/}' .config     #分区工具
+        sed -i '/SMBD/{s/=n/=y/}' .config       #Samba局域网共享
+        sed -i '/SYSLOG/{s/=y/=n/}' .config     #Samba访问日志
+        sed -i '/NFSD/{s/=n/=y/}' .config       #NFS共享
+        sed -i '/FTPD/{s/=n/=y/}' .config       #FTP文件服务器
+        sed -i '/ARIA/{s/=n/=y/}' .config       #Aria2文件下载工具
+        ################################################################################################
+        #额外扩展功能，注释以禁用
+        echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config     #SS plus+
+        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config           #V2ray二进制文件(4.8M)
+        echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=y" >> .config         #集成trojan执行文件(1.1M)
+        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config        #smartdns
+        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config     #smartdns二进制文件
+        echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config    #ADGUARDHOME广告过滤
+        echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config          #Caddy在线文件管理服务
+        echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=y" >> .config       #Caddy文件BIN(13M)
+        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
+        echo "CONFIG_FIRMWARE_INCLUDE_TUNSAFE=y" >> .config        #TUNSAFE
+        echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config             #网易云解锁
+        echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=y" >> .config          #网易云执行文件
+        ######################################################################
+        sudo ./clear_tree
+        sudo ./build_firmware_modify $TNAME 0
+        sudo mv -f images/*.trx /opt/images/
+    - name : Upload packages
+      uses: actions/upload-artifact@master
+      if: always()
+      with:
+        name: Padavan-L1
+        path: /opt/images
