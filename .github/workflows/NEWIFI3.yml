@@ -77,18 +77,10 @@ jobs:
         #额外扩展功能，注释以禁用
         echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config     #SS plus+
         echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config           #V2ray二进制文件(4.8M)
-        #echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=y" >> .config         #集成trojan执行文件(1.1M)
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config        #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config     #smartdns二进制文件
-        #echo "CONFIG_FIRMWARE_INCLUDE_ADBYBY=y" >> .config         #adbyby广告过滤
-        #echo "CONFIG_FIRMWARE_INCLUDE_KOOLPROXY=y" >> .config      #KP广告过滤
-        #echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config    #ADGUARDHOME广告过滤
-        #echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config          #Caddy在线文件管理服务
-        #echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=y" >> .config       #Caddy文件BIN(13M)
+        echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config    #ADGUARDHOME广告过滤
         echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
-        #echo "CONFIG_FIRMWARE_INCLUDE_TUNSAFE=y" >> .config        #TUNSAFE
-        echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config             #网易云解锁
-        echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=y" >> .config          #网易云执行文件
         ######################################################################
         sudo ./clear_tree
         sudo ./build_firmware_modify $TNAME 0
