@@ -88,5 +88,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: always()
       with:
-        name: Padavan-NEWIFI3
+        name: Padavan-NEWIFI-MINI
         path: /opt/images
