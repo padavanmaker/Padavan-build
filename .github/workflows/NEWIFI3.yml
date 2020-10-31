@@ -76,7 +76,7 @@ jobs:
         ################################################################################################
         #额外扩展功能，注释以禁用
         echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config     #SS plus+
-        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config           #V2ray二进制文件(4.8M)
+        #echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config           #V2ray二进制文件(4.8M)
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config        #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config     #smartdns二进制文件
         echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config    #ADGUARDHOME广告过滤
@@ -84,10 +84,6 @@ jobs:
         ######################################################################
         sed -i '/LABEL_COPYRIGHT_TEXT/{s/2019/2020/}' user/www/Makefile
         sed -i '/size_tmp="24M"/{s/24/128/}' user/scripts/dev_init.sh
-        sed -i '/SRC_NAME = htop-2.2.0/{s/htop-2.2.0/htop-3.0.2/}' user/htop/Makefile
-        sed -i '/https://hisham.hm/htop/releases/2.2.0/htop-2.2.0.tar.gz/{s/https://hisham.hm/htop/releases/2.2.0/htop-2.2.0.tar.gz/https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz/}' user/htop/Makefile
-        echo "conf-file /etc/storage/anti-ad-for-smartdns.conf" >> user/smartdns/smartdns_custom.conf
-        sudo ./clear_tree
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
     - name : Upload packages
