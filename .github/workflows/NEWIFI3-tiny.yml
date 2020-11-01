@@ -50,8 +50,6 @@ jobs:
         #最小化系统及更新设置
         sed -i '/INCLUDE/{s/=y/=n/}' .config
         sed -i '/LANG_CN/{s/=n/=y/}' .config
-        
-        sed -i '/^size_tmp=/size_tmp="128M"' user/scripts/dev_init.sh
         sed -i '/LABEL_COPYRIGHT_TEXT/{s/2019/2020/}' user/www/Makefile
         sed -i '/^SRC_NAME/SRC_NAME = htop-3.0.2' user/htop/Makefile
         sed -i '/^SRC_URL/SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz/' user/htop/Makefile
