@@ -55,9 +55,9 @@ jobs:
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz' user/htop/Makefile
         rm -rf user/v2ray/Makefile                              #更新vmake
-        cp -f user/v2ray/Makefile $GITHUB_WORKSPACE/vmake
+        cp -f $GITHUB_WORKSPACE/vmake user/v2ray/Makefile 
         rm -rf user/adguardhome/adguardhome.sh                  #更新adguard脚本
-        cp -f user/adguardhome/adguardhome.sh $GITHUB_WORKSPACE/adguard
+        cp -f $GITHUB_WORKSPACE/adguard user/adguardhome/adguardhome.sh 
         ################################################################################################
         #删除注释以关闭更多不需要的功能支持，默认保留
         sed -i '/ENABLE_IPV6/{s/=y/=n/}' .config               #IPV6支持
