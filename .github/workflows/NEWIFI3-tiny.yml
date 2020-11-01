@@ -47,14 +47,20 @@ jobs:
         fi
         cp -f configs/templates/$TNAME.config .config
         ################################################################################################
-        #最小化系统设置
+        #最小化系统及更新设置
         sed -i '/INCLUDE/{s/=y/=n/}' .config
         sed -i '/LANG_CN/{s/=n/=y/}' .config
+        
+        sed -i '/^size_tmp=/size_tmp="128M"' user/scripts/dev_init.sh
+        sed -i '/LABEL_COPYRIGHT_TEXT/{s/2019/2020/}' user/www/Makefile
+        sed -i '/^SRC_NAME/SRC_NAME = htop-3.0.2' user/htop/Makefile
+        sed -i '/^SRC_URL/SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz/' user/htop/Makefile
+        
         ################################################################################################
         #删除注释以关闭更多不需要的功能支持，默认保留
         #sed -i '/ENABLE_IPV6/{s/=y/=n/}' .config   #IPV6支持
-        #sed -i '/ENABLE_USB/{s/=y/=n/}' .config    #USB接口相关功能
-        sed -i '/ENABLE_UFSD/{s/=y/=n/}' .config   #NTFS文件系统
+        sed -i '/ENABLE_USB/{s/=y/=n/}' .config     #USB接口相关功能
+        sed -i '/ENABLE_UFSD/{s/=y/=n/}' .config    #NTFS文件系统
         ################################################################################################
         #添加基础工具
         sed -i '/_OPENSS/{s/=n/=y/}' .config
@@ -79,16 +85,14 @@ jobs:
         #echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config           #V2ray二进制文件(4.8M)
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config        #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config     #smartdns二进制文件
-        echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config    #ADGUARDHOME广告过滤
+        #echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config    #ADGUARDHOME广告过滤
         #echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
         ######################################################################
-        sed -i '/LABEL_COPYRIGHT_TEXT/{s/2019/2020/}' user/www/Makefile
-        sed -i '/size_tmp="24M"/{s/24/128/}' user/scripts/dev_init.sh
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
     - name : Upload packages
       uses: actions/upload-artifact@master
       if: always()
       with:
-        name: Padavan-NEWIFI3
+        name: Padavan-NEWIFI3-tiny
         path: /opt/images
