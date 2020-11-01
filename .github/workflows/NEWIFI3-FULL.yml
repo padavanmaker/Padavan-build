@@ -54,7 +54,8 @@ jobs:
         sed -i '/2011-2019/{s/2019/2020/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz' user/htop/Makefile
-        cp -f user/v2ray/Makefile $GITHUB_WORKSPACE/vmake       #更新vmake
+        rm -rf user/v2ray/Makefile                              #更新vmake
+        cp -f user/v2ray/Makefile $GITHUB_WORKSPACE/vmake
         cp -f user/adguardhome/adguardhome.sh $GITHUB_WORKSPACE/adguard       #更新adguard脚本
         ################################################################################################
         #删除注释以关闭更多不需要的功能支持，默认保留
