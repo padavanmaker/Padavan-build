@@ -48,14 +48,18 @@ jobs:
         cp -f configs/templates/$TNAME.config .config
         ################################################################################################
         #最小化系统及更新设置
-        sed -i '/INCLUDE/{s/=y/=n/}' .config
-        sed -i '/LANG_CN/{s/=n/=y/}' .config
-        sed -i '/LABEL_COPYRIGHT_TEXT/{s/2019/2020/}' user/www/Makefile
+        echo "CONFIG_FIRMWARE_WEBUI_HIDE_VPN=y" >> .config      #关闭ASUS VPN服务
+        sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
+        sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
+        sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh    #调整/tmp分区为128MB
+        sed -i '/2011-2019/{s/2019/2020/}' user/www/Makefile    #过年好
+        sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
+        sed -i '2c SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz' user/htop/Makefile
         ################################################################################################
         #删除注释以关闭更多不需要的功能支持，默认保留
-        #sed -i '/ENABLE_IPV6/{s/=y/=n/}' .config   #IPV6支持
-        sed -i '/ENABLE_USB/{s/=y/=n/}' .config     #USB接口相关功能
-        sed -i '/ENABLE_UFSD/{s/=y/=n/}' .config    #NTFS文件系统
+        #sed -i '/ENABLE_IPV6/{s/=y/=n/}' .config               #IPV6支持
+        sed -i '/ENABLE_USB/{s/=y/=n/}' .config                 #USB接口相关功能
+        sed -i '/ENABLE_UFSD/{s/=y/=n/}' .config                #NTFS文件系统
         ################################################################################################
         #添加基础工具
         sed -i '/_OPENSS/{s/=n/=y/}' .config
@@ -77,12 +81,12 @@ jobs:
         ################################################################################################
         #额外扩展功能，注释以禁用
         echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config     #SS plus+
-        #echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config           #V2ray二进制文件(4.8M)
+        #echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config          #V2ray二进制文件(4.8M)
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config        #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config     #smartdns二进制文件
         #echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config    #ADGUARDHOME广告过滤
-        #echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
-        ######################################################################
+        #echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config       #zerotier (1.3M)
+        ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
     - name : Upload packages
