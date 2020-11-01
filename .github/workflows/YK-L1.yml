@@ -50,14 +50,12 @@ jobs:
         #最小化系统及更新设置
         sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
-        sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh    #调整/tmp分区为128MB
+        sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh    #调整/tmp分区为32MB
         sed -i '3c FIRMWARE_BUILDS_REV=20201101' versions.inc   #更新版本日期
         sed -i '/2011-2019/{s/2019/2020/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz' user/htop/Makefile
-        rm -rf user/v2ray/Makefile                              #更新vmake
         cp -f $GITHUB_WORKSPACE/vmake user/v2ray/Makefile 
-        rm -rf user/adguardhome/adguardhome.sh                  #更新adguard脚本
         cp -f $GITHUB_WORKSPACE/adguard user/adguardhome/adguardhome.sh 
         ################################################################################################
         #删除注释以关闭更多不需要的功能支持，默认保留
@@ -79,9 +77,9 @@ jobs:
         sed -i '/PARTED/{s/=n/=y/}' .config     #分区工具
         sed -i '/SMBD/{s/=n/=y/}' .config       #Samba局域网共享
         sed -i '/SYSLOG/{s/=y/=n/}' .config     #关闭Samba访问日志
-        sed -i '/NFSD/{s/=n/=y/}' .config       #NFS共享
-        sed -i '/FTPD/{s/=n/=y/}' .config       #FTP文件服务器
-        sed -i '/ARIA/{s/=n/=y/}' .config       #Aria2文件下载工具
+        #sed -i '/NFSD/{s/=n/=y/}' .config       #NFS共享
+        #sed -i '/FTPD/{s/=n/=y/}' .config       #FTP文件服务器
+        #sed -i '/ARIA/{s/=n/=y/}' .config       #Aria2文件下载工具
         ################################################################################################
         #额外扩展功能，注释以禁用
         echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config     #SS plus+
@@ -90,11 +88,11 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config     #smartdns二进制文件
         echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config     #ADGUARDHOME广告过滤
         echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
-        echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config           #在线文件管理服务
-        echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=y" >> .config        #集成caddy执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
-        #echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config             #网易云解锁
-        #echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=y" >> .config          #网易云解锁GO版本执行文件（4M多）注意固件超大小,不集成会自动下载
-        #echo "CONFIG_FIRMWARE_WEBUI_HIDE_VPN=y" >> .config         #关闭ASUS VPN服务
+        #echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config           #在线文件管理服务
+        #echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=y" >> .config        #集成caddy执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
+        echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config             #网易云解锁
+        echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=y" >> .config          #网易云解锁GO版本执行文件（4M多）注意固件超大小,不集成会自动下载
+        echo "CONFIG_FIRMWARE_WEBUI_HIDE_VPN=y" >> .config         #关闭ASUS VPN服务
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
