@@ -63,7 +63,7 @@ jobs:
         #删除注释以关闭更多不需要的功能支持，默认保留
         sed -i '/ENABLE_IPV6/{s/=y/=n/}' .config               #IPV6支持
         sed -i '/ENABLE_USB/{s/=y/=n/}' .config                 #USB接口相关功能
-        sed -i '/ENABLE_UFSD/{s/=y/=n/}' .config                #NTFS文件系统
+        #sed -i '/ENABLE_UFSD/{s/=y/=n/}' .config                #NTFS文件系统
         ################################################################################################
         #添加基础工具
         sed -i '/_OPENSS/{s/=n/=y/}' .config
@@ -73,7 +73,7 @@ jobs:
         sed -i '/IPERF3/{s/=n/=y/}' .config
         ################################################################################################
         #默认扩展功能，注释以禁用
-        sed -i '/VLMCSD/{s/=n/=y/}' .config     #KMS激活服务
+        #sed -i '/VLMCSD/{s/=n/=y/}' .config     #KMS激活服务
         sed -i '/SFTP/{s/=n/=y/}' .config       #SFTP文件访问
         sed -i '/HDPARM/{s/=n/=y/}' .config     #硬盘休眠
         sed -i '/PARTED/{s/=n/=y/}' .config     #分区工具
@@ -89,7 +89,7 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config        #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config     #smartdns二进制文件
         #echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config     #ADGUARDHOME广告过滤
-        #echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
+        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
         #echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config           #在线文件管理服务
         #echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=y" >> .config        #集成caddy执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
         #echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config             #网易云解锁
