@@ -1,5 +1,5 @@
 #修改TNAME: K2P-5.0 中的K2P-5.0为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
-name: Build Padavan for NEWIFI3
+name: Build Padavan for NEWIFI3-FULL
 
 on: 
   release:
@@ -51,6 +51,7 @@ jobs:
         sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
         sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh    #调整/tmp分区为128MB
+        sed -i '3c FIRMWARE_BUILDS_REV=20201101' versions.inc   #更新版本日期
         sed -i '/2011-2019/{s/2019/2020/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz' user/htop/Makefile
@@ -91,8 +92,8 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
         echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config           #在线文件管理服务
         echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=y" >> .config        #集成caddy执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
-        echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config             #网易云解锁
-        echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=y" >> .config          #网易云解锁GO版本执行文件（4M多）注意固件超大小,不集成会自动下载
+        #echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config             #网易云解锁
+        #echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=y" >> .config          #网易云解锁GO版本执行文件（4M多）注意固件超大小,不集成会自动下载
         #echo "CONFIG_FIRMWARE_WEBUI_HIDE_VPN=y" >> .config         #关闭ASUS VPN服务
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
