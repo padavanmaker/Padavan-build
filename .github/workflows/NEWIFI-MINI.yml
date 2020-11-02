@@ -77,8 +77,8 @@ jobs:
         sed -i '/PARTED/{s/=n/=y/}' .config     #分区工具
         sed -i '/SMBD/{s/=n/=y/}' .config       #Samba局域网共享
         sed -i '/SYSLOG/{s/=y/=n/}' .config     #关闭Samba访问日志
-        sed -i '/NFSD/{s/=n/=y/}' .config       #NFS共享
-        sed -i '/FTPD/{s/=n/=y/}' .config       #FTP文件服务器
+        sed -i '/MINIDLNA/{s/=n/=y/}' .config   #UPNP文件共享
+        sed -i '/FFMPEG/{s/=n/=y/}' .config     #新版FFMPEG
         sed -i '/ARIA/{s/=n/=y/}' .config       #Aria2文件下载工具
         ################################################################################################
         #额外扩展功能，注释以禁用
