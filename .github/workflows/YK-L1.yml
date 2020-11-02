@@ -99,5 +99,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: always()
       with:
-        name: Padavan-NEWIFI3-FULL
+        name: Padavan-YK-L1
         path: /opt/images
