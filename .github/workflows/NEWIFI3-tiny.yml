@@ -79,7 +79,7 @@ jobs:
         sed -i '/SYSLOG/{s/=y/=n/}' .config     #关闭Samba访问日志
         #sed -i '/NFSD/{s/=n/=y/}' .config       #NFS共享
         #sed -i '/FTPD/{s/=n/=y/}' .config       #FTP文件服务器
-        sed -i '/ARIA/{s/=n/=y/}' .config       #Aria2文件下载工具
+        #sed -i '/ARIA/{s/=n/=y/}' .config       #Aria2文件下载工具
         ################################################################################################
         #额外扩展功能，注释以禁用
         echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config     #SS plus+
