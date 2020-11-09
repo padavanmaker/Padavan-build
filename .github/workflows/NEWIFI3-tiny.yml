@@ -55,8 +55,6 @@ jobs:
         sed -i '/2011-2019/{s/2019/2020/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz' user/htop/Makefile
-        sed -i '4c SRC_ARIA_NG_NAME=AriaNg-1.1.7-AllInOne' user/aria2/Makefile  #更新AriaNg
-        sed -i '5c SRC_ARIA_NG_URL=https://github.com/mayswind/AriaNg/releases/download/1.1.7/AriaNg-1.1.7-AllInOne.zip' user/aria2/Makefile
         cp -f $GITHUB_WORKSPACE/vmake user/v2ray/Makefile
         cp -f $GITHUB_WORKSPACE/dnsmasq user/dnsmasq/Makefile 
         ################################################################################################
