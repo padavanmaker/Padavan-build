@@ -55,7 +55,8 @@ jobs:
         sed -i '/2011-2019/{s/2019/2020/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz' user/htop/Makefile
-        sed -i '1c SRC_NAME = smartdns-Release33' user/smartdns/Makefile    #更新smartdns
+        sed -i '/5335>/{s/5335>/5335 >/}' user/adguardhome/adguardhome.sh    #修改adguardhome脚本
+        sed -i '1c SRC_NAME = smartdns-Release33' user/smartdns/Makefile     #更新smartdns
         cp -f $GITHUB_WORKSPACE/smartdns-Release33.tar.gz user/smartdns/smartdns-Release33.tar.gz
         cp -f $GITHUB_WORKSPACE/vmake user/v2ray/Makefile
         cp -f $GITHUB_WORKSPACE/dnsmasq user/dnsmasq/Makefile 
