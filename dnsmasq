@@ -14,7 +14,7 @@ COPTS += -DNO_IPSET
 endif
 
 all: download_test extract_test
-	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME) COPTS="$(COPTS)"
+	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" COPTS="$(COPTS)"
 
 download_test:
 	( if [ ! -f $(SRC_NAME).tar.gz ]; then \
