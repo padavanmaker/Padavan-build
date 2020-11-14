@@ -23,15 +23,17 @@ download_test:
 
 extract_test:
 	( if [ ! -d $(SRC_NAME) ]; then \
-		tar zxf $(SRC_NAME).tar.gz; \
+		tar zxf $(SRC_NAME).tar.gz ; \
+		patch -d $(SRC_NAME) -p1 -i ../patch/900-filter-aaaa.patch; \
+		patch -d $(SRC_NAME) -p1 -i ../patch/910-mini-ttl.patch; \
 	fi )
 
-
 clean:
-	$(MAKE) -C $(SRC_NAME) clean
+	rm -rf $(SRC_NAME)
 	rm -f dnsmasq
 
 romfs:
 	cp $(SRC_NAME)/src/dnsmasq .
 	$(STRIP) dnsmasq
 	$(ROMFSINST) /usr/sbin/dnsmasq
+	$(ROMFSINST) -p +x $(THISDIR)/dnsmasq.sh /usr/bin/dnsmasq.sh
