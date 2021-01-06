@@ -51,8 +51,8 @@ jobs:
         sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
         sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh    #调整/tmp分区为32MB
-        sed -i '3c FIRMWARE_BUILDS_REV=20201101' versions.inc   #更新版本日期
-        sed -i '/2011-2019/{s/2019/2020/}' user/www/Makefile    #过年好
+        sed -i '3c FIRMWARE_BUILDS_REV=20210106' versions.inc   #更新版本日期
+        sed -i '/2011-2019/{s/2019/2021/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz' user/htop/Makefile
         sed -i '4c SRC_ARIA_NG_NAME=AriaNg-1.1.7-AllInOne' user/aria2/Makefile  #更新AriaNg
@@ -88,10 +88,6 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config        #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config     #smartdns二进制文件
         echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config     #ADGUARDHOME广告过滤
-        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
-        echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config           #在线文件管理服务
-        echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=y" >> .config        #集成caddy执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
-        echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config             #网易云解锁
         echo "CONFIG_FIRMWARE_WEBUI_HIDE_VPN=y" >> .config         #关闭ASUS VPN服务
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
