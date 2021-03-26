@@ -25,7 +25,7 @@ set_iptable()
 	for IP in $IPS
 	do
 		iptables -t nat -A PREROUTING -p tcp -d $IP --dport 53 -j REDIRECT --to-ports 5335 >/dev/null 2>&1
-		iptables -t nat -A PREROUTING -p udp -d $IP --dport 53 -j REDIRECT --to-ports 5335>/dev/null 2>&1
+		iptables -t nat -A PREROUTING -p udp -d $IP --dport 53 -j REDIRECT --to-ports 5335 >/dev/null 2>&1
 	done
 
 	IPS="`ifconfig | grep "inet6 addr" | grep -v " fe80::" | grep -v " ::1" | grep "Global" | awk '{print $3}'`"
@@ -138,8 +138,8 @@ fi
 
 dl_adg(){
 logger -t "AdGuardHome" "下载AdGuardHome"
-wget --no-check-certificate -O /tmp/AdGuardHome.tar.gz https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.104.0/AdGuardHome_linux_mipsle_softfloat.tar.gz
-tar -xzf AdGuardHome.tar.gz -C ./
+#wget --no-check-certificate -O /tmp/AdGuardHome.tar.gz https://github.com/AdguardTeam/AdGuardHome/releases/download/v0.101.0/AdGuardHome_linux_mipsle.tar.gz
+curl -k -s -o /tmp/AdGuardHome/AdGuardHome --connect-timeout 10 --retry 3 https://cdn.jsdelivr.net/gh/chongshengB/rt-n56u/trunk/user/adguardhome/AdGuardHome
 if [ ! -f "/tmp/AdGuardHome/AdGuardHome" ]; then
 logger -t "AdGuardHome" "AdGuardHome下载失败，请检查是否能正常访问github!程序将退出。"
 nvram set adg_enable=0
