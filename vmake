@@ -1,6 +1,6 @@
 THISDIR = $(shell pwd)
 SRC_NAME = v2ray-linux-mipsle
-SRC_URL = https://github.com/felix-fly/v2ray-openwrt/releases/download/4.31.2/v2ray-linux-mipsle.tar.gz
+SRC_URL = https://github.com/felix-fly/v2ray-openwrt/releases/download/4.36.2/v2ray-linux-mipsle.tar.gz
 
 all: download_test extract_test
 	
