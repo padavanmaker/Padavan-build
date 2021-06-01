@@ -51,7 +51,7 @@ jobs:
         sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
         sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh    #调整/tmp分区为128MB
-        sed -i '3c FIRMWARE_BUILDS_REV=20210326' versions.inc   #更新版本日期
+        sed -i '3c FIRMWARE_BUILDS_REV=20210601' versions.inc   #更新版本日期
         sed -i '/2011-2019/{s/2019/2021/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.5' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.5.tar.gz' user/htop/Makefile
