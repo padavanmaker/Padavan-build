@@ -54,7 +54,7 @@ jobs:
         sed -i '3c FIRMWARE_BUILDS_REV=20210601' versions.inc   #更新版本日期
         sed -i '/2011-2019/{s/2019/2021/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.5' user/htop/Makefile    #更新htop
-        sed -i '2c SRC_URL = https://distfiles.macports.org/htop/htop-3.0.5.tar.gz' user/htop/Makefile
+        sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.5.tar.gz' user/htop/Makefile
         cp -f $GITHUB_WORKSPACE/vmake user/v2ray/Makefile
         #cp -f $GITHUB_WORKSPACE/dnsmasq user/dnsmasq/Makefile 
         ################################################################################################
