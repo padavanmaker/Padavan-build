@@ -1,5 +1,5 @@
 #修改TNAME: K2P-5.0 中的K2P-5.0为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
-name: Build Padavan for NEWIFI3-tiny
+name: Build Padavan for NEWIFI3
 
 on: 
   release:
@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
@@ -32,7 +32,7 @@ jobs:
         pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget
     - name: Clone source code
       run: |
-        git clone --depth=1 https://github.com/chongshengB/rt-n56u.git /opt/rt-n56u
+        git clone --depth=1 https://github.com/keke1023/Padavan.git /opt/rt-n56u
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
@@ -50,33 +50,35 @@ jobs:
         #最小化系统及更新设置
         sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
-        sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh    #调整/tmp分区为128MB
-        sed -i '3c FIRMWARE_BUILDS_REV=20210602' versions.inc   #更新版本日期
-        sed -i '/2011-2019/{s/2019/2021/}' user/www/Makefile    #过年好
-        sed -i '1c SRC_NAME = htop-3.0.5' user/htop/Makefile    #更新htop
-        sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.5.tar.gz' user/htop/Makefile
-        cp -f $GITHUB_WORKSPACE/vmake user/v2ray/Makefile
+        sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh    #调整/tmp分区为32MB
+        sed -i '3c FIRMWARE_BUILDS_REV=lissom' versions.inc   #更新版本日期
+        sed -i '2c FRP_VER := 0.44.0' user/frp/Makefile    #更新frp
+        sed -i '4c SRC_ARIA_NG_NAME=AriaNg-1.2.4-AllInOne' user/aria2/Makefile  #更新AriaNg
+        sed -i '5c SRC_ARIA_NG_URL=https://github.com/mayswind/AriaNg/releases/download/1.2.4/AriaNg-1.2.4-AllInOne.zip' user/aria2/Makefile
+        wget https://bitbucket.org/padavan/rt-n56u/raw/32a93db4026cc2cff585d7008373432d888fc1aa/trunk/user/www/n56u_ribbon_fixed/bootstrap/img/asus_logo.png -O user/www/n56u_ribbon_fixed/bootstrap/img/asus_logo.png
         ################################################################################################
         #删除注释以关闭更多不需要的功能支持，默认保留
-        #sed -i '/ENABLE_IPV6/{s/=y/=n/}' .config               #IPV6支持
-        #sed -i '/ENABLE_USB/{s/=y/=n/}' .config                 #USB接口相关功能
         sed -i '/ENABLE_UFSD/{s/=y/=n/}' .config                #NTFS文件系统
         ################################################################################################
-        #添加基础工具
+        #恢复基础工具
         sed -i '/_OPENSS/{s/=n/=y/}' .config
         sed -i '/IPSET/{s/=n/=y/}' .config
         sed -i '/CURL/{s/=n/=y/}' .config
         sed -i '/HTOP/{s/=n/=y/}' .config
         sed -i '/IPERF3/{s/=n/=y/}' .config
+        sed -i '/OPENVPN/{s/=n/=y/}' .config
+        sed -i '/TTYD/{s/=n/=y/}' .config
+        sed -i '/FRPC/{s/=n/=y/}' .config
         ################################################################################################
         #默认扩展功能，注释以禁用
         sed -i '/SFTP/{s/=n/=y/}' .config       #SFTP文件访问
+        sed -i '/HDPARM/{s/=n/=y/}' .config     #硬盘休眠
         ################################################################################################
         #额外扩展功能，注释以禁用
-        echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config     #SS plus+
-        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config           #V2ray二进制文件(4.8M)
+        #echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config        #smartdns
+        #echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config        #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config        #smartdns
-        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config     #smartdns二进制文件
+        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
@@ -84,5 +86,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: always()
       with:
-        name: Padavan-NEWIFI3-tiny
+        name: Padavan-NEWIFI3
         path: /opt/images
