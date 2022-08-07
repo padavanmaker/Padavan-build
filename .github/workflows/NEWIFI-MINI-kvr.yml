@@ -48,17 +48,20 @@ jobs:
         cp -f configs/templates/$TNAME.config .config
         ################################################################################################
         #最小化系统及更新设置
+        cp -f $GITHUB_WORKSPACE/asus_logo.png  user/www/n56u_ribbon_fixed/bootstrap/img/asus_logo.png   #替换logo
         sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
-        sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh    #调整/tmp分区为32MB
-        sed -i '3c FIRMWARE_BUILDS_REV=lissom' versions.inc   #更新版本日期
-        sed -i '2c FRP_VER := 0.44.0' user/frp/Makefile    #更新frp
+        sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh     #调整/tmp分区为32MB
+        sed -i '3c FIRMWARE_BUILDS_REV=lissom' versions.inc     #更新版本
+        sed -i '/2011-2019/{s/2019/2022/}' user/www/Makefile    #过年好
+        ################################################################################################
+        #更新软件源码
+        sed -i '2c FRP_VER := 0.44.0' user/frp/Makefile                         #更新frp
+        sed -i 's/htop-3.0.5/htop-3.1.2' user/htop/Makefile                     #更新htop
+        sed -i '1c SRC_NAME = smartdns-Release34' user/smartdns/Makefile        #更新smartdns
+        cp -f $GITHUB_WORKSPACE/smartdns-Release37.tar.gz  user/smartdns/smartdns-Release37.tar.gz
         sed -i '4c SRC_ARIA_NG_NAME=AriaNg-1.2.4-AllInOne' user/aria2/Makefile  #更新AriaNg
         sed -i '5c SRC_ARIA_NG_URL=https://github.com/mayswind/AriaNg/releases/download/1.2.4/AriaNg-1.2.4-AllInOne.zip' user/aria2/Makefile
-        cp -f $GITHUB_WORKSPACE/asus_logo.png  user/www/n56u_ribbon_fixed/bootstrap/img/asus_logo.png
-        ################################################################################################
-        #删除注释以关闭更多不需要的功能支持，默认保留
-        sed -i '/ENABLE_UFSD/{s/=y/=n/}' .config                #NTFS文件系统
         ################################################################################################
         #恢复基础工具
         sed -i '/_OPENSS/{s/=n/=y/}' .config
@@ -74,11 +77,11 @@ jobs:
         sed -i '/SFTP/{s/=n/=y/}' .config       #SFTP文件访问
         sed -i '/HDPARM/{s/=n/=y/}' .config     #硬盘休眠
         ################################################################################################
-        #额外扩展功能，注释以禁用
+        #添加额外扩展功能，注释以禁用
         #echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config        #smartdns
-        #echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config        #smartdns
-        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config        #smartdns
-        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config        #zerotier (1.3M)
+        #echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config              #smartdns
+        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config            #smartdns
+        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config            #zerotier (1.3M)
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
