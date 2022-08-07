@@ -57,7 +57,7 @@ jobs:
         ################################################################################################
         #更新软件源码
         sed -i '2c FRP_VER := 0.44.0' user/frp/Makefile                         #更新frp
-        sed -i 's/htop-3.0.5/htop-3.1.2' user/htop/Makefile                     #更新htop
+        sed -i '/htop-3.0.5/{s/3.0.5/3.1.2/}' user/htop/Makefile                #更新htop
         sed -i '1c SRC_NAME = smartdns-Release34' user/smartdns/Makefile        #更新smartdns
         cp -f $GITHUB_WORKSPACE/smartdns-Release37.tar.gz  user/smartdns/smartdns-Release37.tar.gz
         sed -i '4c SRC_ARIA_NG_NAME=AriaNg-1.2.4-AllInOne' user/aria2/Makefile  #更新AriaNg
