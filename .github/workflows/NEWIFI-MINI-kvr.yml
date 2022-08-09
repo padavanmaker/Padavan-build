@@ -60,6 +60,7 @@ jobs:
         sed -i '/htop-3.0.5/{s/3.0.5/3.0.2/}' user/htop/Makefile                #更新htop
         sed -i '1c SRC_NAME = smartdns-Release37' user/smartdns/Makefile        #更新smartdns
         cp -f $GITHUB_WORKSPACE/smartdns-Release37.tar.gz  user/smartdns/smartdns-Release37.tar.gz
+        wget https://raw.githubusercontent.com/felix-fly/v2ray-padavan-doh/master/smartdns/ad.hosts -O user/smartdns/ad.hosts
         sed -i '4c SRC_ARIA_NG_NAME=AriaNg-1.2.4-AllInOne' user/aria2/Makefile  #更新AriaNg
         sed -i '5c SRC_ARIA_NG_URL=https://github.com/mayswind/AriaNg/releases/download/1.2.4/AriaNg-1.2.4-AllInOne.zip' user/aria2/Makefile
         ################################################################################################
