@@ -53,6 +53,8 @@ jobs:
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
         sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh     #调整/tmp分区为32MB
         sed -i '3c FIRMWARE_BUILDS_REV=lissom' versions.inc     #更新版本
+        sed -i '857c CONFIG_MTD_STORE_PART_SIZ=0x600000' configs/boards/NEWIFI3/kernel-3.4.x.config
+        sed -i '6c mtd_part_size=6291456' user/scripts/mtd_storage.sh     #加大storage空间
         sed -i '/2011-2019/{s/2019/2022/}' user/www/Makefile    #过年好
         ################################################################################################
         #更新软件源码
