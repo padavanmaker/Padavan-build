@@ -51,11 +51,11 @@ jobs:
         cp -f $GITHUB_WORKSPACE/asus_logo.png  user/www/n56u_ribbon_fixed/bootstrap/img/asus_logo.png   #替换logo
         sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
-        sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh     #调整/tmp分区为32MB
+        sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh     #调整/tmp分区为128MB
         sed -i '3c FIRMWARE_BUILDS_REV=lissom' versions.inc     #更新版本
-        sed -i '857c CONFIG_MTD_STORE_PART_SIZ=0x600000' configs/boards/NEWIFI3/kernel-3.4.x.config
-        sed -i '6c mtd_part_size=6291456' user/scripts/mtd_storage.sh     #加大storage空间
         sed -i '/2011-2019/{s/2019/2022/}' user/www/Makefile    #过年好
+        sed -i '886c CONFIG_MTD_STORE_PART_SIZ=0x600000' configs/boards/NEWIFI3/kernel-3.4.x.config
+        sed -i '6c mtd_part_size=6291456' user/scripts/mtd_storage.sh     #加大storage空间
         ################################################################################################
         #更新软件源码
         sed -i '2c FRP_VER := 0.44.0' user/frp/Makefile                         #更新frp
@@ -72,19 +72,14 @@ jobs:
         sed -i '/CURL/{s/=n/=y/}' .config
         sed -i '/HTOP/{s/=n/=y/}' .config
         sed -i '/IPERF3/{s/=n/=y/}' .config
-        sed -i '/OPENVPN/{s/=n/=y/}' .config
         sed -i '/TTYD/{s/=n/=y/}' .config
-        #sed -i '/FRPC/{s/=n/=y/}' .config
         ################################################################################################
         #默认扩展功能，注释以禁用
         sed -i '/SFTP/{s/=n/=y/}' .config       #SFTP文件访问
-        sed -i '/HDPARM/{s/=n/=y/}' .config     #硬盘休眠
+        #sed -i '/HDPARM/{s/=n/=y/}' .config     #硬盘休眠
         ################################################################################################
         #添加额外扩展功能，注释以禁用
-        #echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config        #smartdns
-        #echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config              #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config            #smartdns
-        #echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config            #zerotier (1.3M)
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
