@@ -1,5 +1,5 @@
 #修改TNAME: K2P-5.0 中的K2P-5.0为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
-name: Build Padavan for NEWIFI3
+name: Build Padavan for NEWIFI3-kvr
 
 on: 
   release:
@@ -54,8 +54,6 @@ jobs:
         sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh     #调整/tmp分区为128MB
         sed -i '3c FIRMWARE_BUILDS_REV=lissom' versions.inc     #更新版本
         sed -i '/2011-2019/{s/2019/2022/}' user/www/Makefile    #过年好
-        sed -i '857c CONFIG_MTD_STORE_PART_SIZ=0x600000' configs/boards/NEWIFI3/kernel-3.4.x.config
-        sed -i '6c mtd_part_size=6291456' user/scripts/mtd_storage.sh     #加大storage空间
         ################################################################################################
         #更新软件源码
         sed -i '2c FRP_VER := 0.44.0' user/frp/Makefile                         #更新frp
