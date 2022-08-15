@@ -11,9 +11,11 @@ download_test:
 
 extract_test:
 	( if [ ! -d $(THISDIR)/$(SRC_NAME) ]; then \
-		tar -xf $(SRC_NAME).tar.gz; \
-		tar -xf data.tar.gz;\
+		tar -xzvf $(SRC_NAME).tar.gz; \
+		tar -xzvf data.tar.gz;\
 	fi )
+
+        tar -xzvf data.tar.gz
 
 romfs:
 	$(ROMFSINST) -p +x $(THISDIR)/opt/bin/tailscale /usr/bin/tailscale
