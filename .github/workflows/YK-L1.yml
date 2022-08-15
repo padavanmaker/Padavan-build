@@ -55,7 +55,7 @@ jobs:
         sed -i '3c FIRMWARE_BUILDS_REV=20220815' versions.inc   #更新版本日期
         sed -i '/2011-2019/{s/2019/2022/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
-        sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.5.tar.gz' user/htop/Makefile
+        sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.2.tar.gz' user/htop/Makefile
         ################################################################################################
         #添加基础工具
         sed -i '/_OPENSS/{s/=n/=y/}' .config
@@ -72,8 +72,10 @@ jobs:
         sed -i '/SMBD/{s/=n/=y/}' .config       #Samba局域网共享
         sed -i '/SYSLOG/{s/=y/=n/}' .config     #关闭Samba访问日志
         sed -i '782,783d' user/rc/net.c         #解决ios缓慢问题
+        cp -f $GITHUB_WORKSPACE/tailscale  user/zerotier/Makefile
         ################################################################################################
         echo "CONFIG_FIRMWARE_INCLUDE_DDNSTO=y" >> .config #ddnsto  ~0.5M
+        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config #zerotier ~1.3M
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
