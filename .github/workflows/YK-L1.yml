@@ -72,10 +72,11 @@ jobs:
         sed -i '/SMBD/{s/=n/=y/}' .config       #Samba局域网共享
         sed -i '/SYSLOG/{s/=y/=n/}' .config     #关闭Samba访问日志
         sed -i '782,783d' user/rc/net.c         #解决ios缓慢问题
+        rm -f user/zerotier/Makefile
         cp -f $GITHUB_WORKSPACE/tailscale  user/zerotier/Makefile
         ################################################################################################
         #echo "CONFIG_FIRMWARE_INCLUDE_DDNSTO=y" >> .config #ddnsto  ~0.5M
-        #echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config #zerotier ~1.3M
+        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config #zerotier ~1.3M
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
