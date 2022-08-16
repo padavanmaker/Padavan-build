@@ -32,7 +32,7 @@ jobs:
         pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget
     - name: Clone source code
       run: |
-        git clone --depth=1 https://github.com/chongshengB/rt-n56u.git /opt/rt-n56u
+        git clone --depth=1 https://github.com/hanwckf/rt-n56u.git /opt/rt-n56u
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
@@ -41,6 +41,12 @@ jobs:
         TNAME: YK-L1
       run: |
         cd /opt/rt-n56u/trunk
+        mkdir -p configs/boards/YK-L1
+        wget https://raw.githubusercontent.com/chongshengB/rt-n56u/master/trunk/configs/templates/YK-L1.config -O configs/templates/YK-L1.config
+        wget https://raw.githubusercontent.com/chongshengB/rt-n56u/master/trunk/configs/boards/YK-L1/board.h -O configs/boards/YK-L1/board.h
+        wget https://raw.githubusercontent.com/chongshengB/rt-n56u/master/trunk/configs/boards/YK-L1/board.mk -O configs/boards/YK-L1/board.mk
+        wget https://raw.githubusercontent.com/chongshengB/rt-n56u/master/trunk/configs/boards/YK-L1/kernel-3.4.x.config -O configs/boards/YK-L1/kernel-3.4.x.config
+        wget https://raw.githubusercontent.com/chongshengB/rt-n56u/master/trunk/configs/boards/YK-L1/libc.config -O configs/boards/YK-L1/libc.config
         if [ ! -f configs/templates/$TNAME.config ] ; then
         echo "configs/templates/$TNAME.config not found "
         exit 1
