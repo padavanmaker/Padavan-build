@@ -65,18 +65,15 @@ jobs:
         sed -i '/IPERF3/{s/=n/=y/}' .config
         ################################################################################################
         #默认扩展功能，注释以禁用
-        #sed -i '/VLMCSD/{s/=n/=y/}' .config     #KMS激活服务
         sed -i '/SFTP/{s/=n/=y/}' .config       #SFTP文件访问
-        sed -i '/HDPARM/{s/=n/=y/}' .config     #硬盘休眠
-        sed -i '/PARTED/{s/=n/=y/}' .config     #分区工具
-        sed -i '/SMBD/{s/=n/=y/}' .config       #Samba局域网共享
-        sed -i '/SYSLOG/{s/=y/=n/}' .config     #关闭Samba访问日志
         sed -i '782,783d' user/rc/net.c         #解决ios缓慢问题
-        rm -f user/zerotier/Makefile
-        cp -f $GITHUB_WORKSPACE/tailscale  user/zerotier/Makefile
+        mkdir -p user/tailscale                 #添加tailscale
+        cp -f $GITHUB_WORKSPACE/tailscale/Makefile  user/tailscale/Makefile
+        cp -f $GITHUB_WORKSPACE/tailscale/tailscale  user/tailscale/tailscale
+        cp -f $GITHUB_WORKSPACE/tailscale/tailscaled  user/tailscale/tailscaled
+        sed -i '163c dir_$(CONFIG_FIRMWARE_INCLUDE_TAILSCALE)  += tailscale' user/Makefile
         ################################################################################################
-        #echo "CONFIG_FIRMWARE_INCLUDE_DDNSTO=y" >> .config #ddnsto  ~0.5M
-        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config #zerotier ~1.3M
+        echo "CONFIG_FIRMWARE_INCLUDE_TAILSCALE=y" >> .config #tailscale
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
