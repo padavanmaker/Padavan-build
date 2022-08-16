@@ -51,29 +51,34 @@ jobs:
         cp -f $GITHUB_WORKSPACE/asus_logo.png  user/www/n56u_ribbon_fixed/bootstrap/img/asus_logo.png   #替换logo
         sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
-        sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh    #调整/tmp分区为32MB
+        sed -i '893,894d' user/rc/net.c                         #解决ios缓慢问题
+        sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh     #调整/tmp分区为32MB
         sed -i '3c FIRMWARE_BUILDS_REV=20220815' versions.inc   #更新版本日期
         sed -i '/2011-2019/{s/2019/2022/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.2.tar.gz' user/htop/Makefile
-        ################################################################################################
-        #添加基础工具
+        ######更新smartdns###############################################################################
+        wget https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-smartdns.conf -O user/smartdns/ad.hosts
+        wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/smartdns/smartdns_custom.conf -O user/smartdns/smartdns_custom.conf
+        wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/smartdns/Makefile -O user/smartdns/Makefile
+        sed -i '1c SRC_NAME = smartdns-Release37' user/smartdns/Makefile
+        cp -f $GITHUB_WORKSPACE/smartdns-Release37.tar.gz  user/smartdns/smartdns-Release37.tar.gz
+        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config
+        #####添加基础工具#################################################################################
         sed -i '/_OPENSS/{s/=n/=y/}' .config
         sed -i '/IPSET/{s/=n/=y/}' .config
         sed -i '/CURL/{s/=n/=y/}' .config
         sed -i '/HTOP/{s/=n/=y/}' .config
         sed -i '/IPERF3/{s/=n/=y/}' .config
-        ################################################################################################
-        #默认扩展功能，注释以禁用
-        sed -i '/SFTP/{s/=n/=y/}' .config       #SFTP文件访问
-        sed -i '782,783d' user/rc/net.c         #解决ios缓慢问题
-        mkdir -p user/tailscale                 #添加tailscale
+        ######默认扩展功能，注释以禁用#####################################################################
+        sed -i '/SFTP/{s/=n/=y/}' .config       #SFTP文件访问 
+        #######添加tailscale#############################################################################
+        mkdir -p user/tailscale 
         cp -f $GITHUB_WORKSPACE/tailscale/Makefile  user/tailscale/Makefile
         cp -f $GITHUB_WORKSPACE/tailscale/tailscale  user/tailscale/tailscale
         cp -f $GITHUB_WORKSPACE/tailscale/tailscaled  user/tailscale/tailscaled
         sed -i '163c dir_$(CONFIG_FIRMWARE_INCLUDE_TAILSCALE)  += tailscale' user/Makefile
-        ################################################################################################
-        echo "CONFIG_FIRMWARE_INCLUDE_TAILSCALE=y" >> .config #tailscale
+        echo "CONFIG_FIRMWARE_INCLUDE_TAILSCALE=y" >> .config
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
