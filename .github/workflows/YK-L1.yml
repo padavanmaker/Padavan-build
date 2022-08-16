@@ -58,7 +58,7 @@ jobs:
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.2.tar.gz' user/htop/Makefile
         ######更新smartdns###############################################################################
-        wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/shared/defaults.c -O user/shared/defaults.c
+        #wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/shared/defaults.c -O user/shared/defaults.c
         wget https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-smartdns.conf -O user/smartdns/ad.hosts
         wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/smartdns/smartdns_custom.conf -O user/smartdns/smartdns_custom.conf
         wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/smartdns/Makefile -O user/smartdns/Makefile
