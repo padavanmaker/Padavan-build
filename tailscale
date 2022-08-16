@@ -1,22 +1,12 @@
-THISDIR = $(shell pwd)
-SRC_NAME = tailscale_1.28.0-1_mipsel-3.4
-SRC_URL = https://bin.entware.net/mipselsf-k3.4/tailscale_1.28.0-1_mipsel-3.4.ipk
+THISDIR := $(shell pwd)
 
-all: download_test extract_test
-	
-download_test: 
-	( if [ ! -f $(THISDIR)/$(SRC_NAME).tar.gz ]; then \
-		wget -t5 --timeout=20 --no-check-certificate -O $(SRC_NAME).tar.gz $(SRC_URL); \
-	fi )
 
-extract_test:
-	( if [ ! -d $(THISDIR)/$(SRC_NAME) ]; then \
-		tar -xzvf $(SRC_NAME).tar.gz; \
-		tar -xzvf data.tar.gz;\
-	fi )
+all: 
+	@echo "tailscale build ok!"
 
-        tar -xzvf data.tar.gz
+clean:
+	@echo "tailscale clean ok!"
 
 romfs:
-	$(ROMFSINST) -p +x $(THISDIR)/opt/bin/tailscale /usr/bin/tailscale
-	$(ROMFSINST) -p +x $(THISDIR)/opt/bin/tailscaled /usr/bin/tailscaled
+	$(ROMFSINST) -p +x $(THISDIR)/tailscale /usr/bin/tailscale
+	$(ROMFSINST) -p +x $(THISDIR)/tailscaled /usr/bin/tailscaled
