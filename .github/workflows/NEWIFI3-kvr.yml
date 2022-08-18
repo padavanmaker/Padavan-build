@@ -72,19 +72,20 @@ jobs:
         sed -i '/CURL/{s/=n/=y/}' .config
         sed -i '/HTOP/{s/=n/=y/}' .config
         sed -i '/IPERF3/{s/=n/=y/}' .config
-        sed -i '/OPENVPN/{s/=n/=y/}' .config
         sed -i '/TTYD/{s/=n/=y/}' .config
-        #sed -i '/FRPC/{s/=n/=y/}' .config
-        ################################################################################################
+        #######添加tailscale#############################################################################
+        mkdir -p user/tailscale 
+        cp -f $GITHUB_WORKSPACE/tailscale/Makefile  user/tailscale/Makefile
+        cp -f $GITHUB_WORKSPACE/tailscale/tailscale  user/tailscale/tailscale
+        cp -f $GITHUB_WORKSPACE/tailscale/tailscaled  user/tailscale/tailscaled
+        sed -i '163c dir_$(CONFIG_FIRMWARE_INCLUDE_TAILSCALE)  += tailscale' user/Makefile
+        echo "CONFIG_FIRMWARE_INCLUDE_TAILSCALE=y" >> .config
         #默认扩展功能，注释以禁用
         sed -i '/SFTP/{s/=n/=y/}' .config       #SFTP文件访问
         sed -i '/HDPARM/{s/=n/=y/}' .config     #硬盘休眠
         ################################################################################################
         #添加额外扩展功能，注释以禁用
-        #echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config        #smartdns
-        #echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config              #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config            #smartdns
-        #echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config            #zerotier (1.3M)
         ################################################################################################
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
