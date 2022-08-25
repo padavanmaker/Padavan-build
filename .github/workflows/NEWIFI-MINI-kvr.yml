@@ -84,7 +84,7 @@ jobs:
         #######添加tailscale#############################################################################
         mkdir -p user/tailscale 
         cp -f $GITHUB_WORKSPACE/tailscale/Makefile  user/tailscale/Makefile
-        cp -f $GITHUB_WORKSPACE/tailscale/tailscale  user/tailscale/tailscale
+        #cp -f $GITHUB_WORKSPACE/tailscale/tailscale  user/tailscale/tailscale
         cp -f $GITHUB_WORKSPACE/tailscale/tailscaled  user/tailscale/tailscaled
         sed -i '163c dir_$(CONFIG_FIRMWARE_INCLUDE_TAILSCALE)  += tailscale' user/Makefile
         echo "CONFIG_FIRMWARE_INCLUDE_TAILSCALE=y" >> .config
