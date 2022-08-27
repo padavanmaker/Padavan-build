@@ -63,7 +63,7 @@ jobs:
         wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/smartdns/smartdns_custom.conf -O user/smartdns/smartdns_custom.conf
         wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/smartdns/Makefile -O user/smartdns/Makefile
         sed -i '1c SRC_NAME = smartdns-Release37' user/smartdns/Makefile
-        cp -f $GITHUB_WORKSPACE/smartdns-Release37.tar.gz  user/smartdns/smartdns-Release37.tar.gz
+        cp -f $GITHUB_WORKSPACE/smartdns-Release37.1.tar.gz  user/smartdns/smartdns-Release37.1.tar.gz
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config
         #####添加基础工具#################################################################################
         sed -i '/_OPENSS/{s/=n/=y/}' .config
