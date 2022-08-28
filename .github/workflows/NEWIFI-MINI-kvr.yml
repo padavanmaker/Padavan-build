@@ -50,6 +50,8 @@ jobs:
         #最小化系统及更新设置
         cp -f $GITHUB_WORKSPACE/asus_logo.png  user/www/n56u_ribbon_fixed/bootstrap/img/asus_logo.png   #替换logo
         sed -i '/INCLUDE/{s/=y/=n/}' .config                    #关闭所有INCLUDE
+        sed -i '/CONFIG_FIRMWARE_ENABLE/{s/=y/=n/}' .config     #关闭所有ENABLE
+        sed -i '/ENABLE_FUSE/{s/=n/=y/}' .config                #关闭所有开启FUSE
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
         sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh     #调整/tmp分区为32MB
         sed -i '3c FIRMWARE_BUILDS_REV=lissom' versions.inc     #更新版本
