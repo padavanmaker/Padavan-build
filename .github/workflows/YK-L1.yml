@@ -53,7 +53,7 @@ jobs:
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
         sed -i '893,894d' user/rc/net.c                         #解决ios缓慢问题
         sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh     #调整/tmp分区为32MB
-        sed -i '3c FIRMWARE_BUILDS_REV=20220815' versions.inc   #更新版本日期
+        sed -i '3c FIRMWARE_BUILDS_REV=20220828' versions.inc   #更新版本日期
         sed -i '/2011-2019/{s/2019/2022/}' user/www/Makefile    #过年好
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile    #更新htop
         sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.2.tar.gz' user/htop/Makefile
@@ -62,8 +62,8 @@ jobs:
         wget https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-smartdns.conf -O user/smartdns/ad.hosts
         wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/smartdns/smartdns_custom.conf -O user/smartdns/smartdns_custom.conf
         wget https://raw.githubusercontent.com/kkjoy/Padavan/main/trunk/user/smartdns/Makefile -O user/smartdns/Makefile
-        sed -i '1c SRC_NAME = smartdns-Release37' user/smartdns/Makefile
-        cp -f $GITHUB_WORKSPACE/smartdns-Release37.1.tar.gz  user/smartdns/smartdns-Release37.1.tar.gz
+        sed -i '1c SRC_NAME = smartdns-Release37.2' user/smartdns/Makefile
+        cp -f $GITHUB_WORKSPACE/smartdns-Release37.2.tar.gz  user/smartdns/smartdns-Release37.2.tar.gz
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config
         #####添加基础工具#################################################################################
         sed -i '/_OPENSS/{s/=n/=y/}' .config
