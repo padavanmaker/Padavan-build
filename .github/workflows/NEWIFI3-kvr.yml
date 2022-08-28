@@ -53,15 +53,13 @@ jobs:
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
         sed -i '7c size_tmp="128M"' user/scripts/dev_init.sh     #调整/tmp分区为32MB
         sed -i '3c FIRMWARE_BUILDS_REV=lissom' versions.inc     #更新版本
-        #sed -i '857c CONFIG_MTD_STORE_PART_SIZ=0x600000' configs/boards/NEWIFI3/kernel-3.4.x.config
-        #sed -i '6c mtd_part_size=6291456' user/scripts/mtd_storage.sh     #加大storage空间
         sed -i '/2011-2019/{s/2019/2022/}' user/www/Makefile    #过年好
         ################################################################################################
         #更新软件源码
         sed -i '2c FRP_VER := 0.44.0' user/frp/Makefile                         #更新frp
         sed -i '/htop-3.0.5/{s/3.0.5/3.0.2/}' user/htop/Makefile                #更新htop
-        sed -i '1c SRC_NAME = smartdns-Release37.1' user/smartdns/Makefile        #更新smartdns
-        cp -f $GITHUB_WORKSPACE/smartdns-Release37.1.tar.gz  user/smartdns/smartdns-Release37.1.tar.gz
+        sed -i '1c SRC_NAME = smartdns-Release37.2' user/smartdns/Makefile        #更新smartdns
+        cp -f $GITHUB_WORKSPACE/smartdns-Release37.2.tar.gz  user/smartdns/smartdns-Release37.2.tar.gz
         wget https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-smartdns.conf -O user/smartdns/ad.hosts
         sed -i '4c SRC_ARIA_NG_NAME=AriaNg-1.2.4-AllInOne' user/aria2/Makefile  #更新AriaNg
         sed -i '5c SRC_ARIA_NG_URL=https://github.com/mayswind/AriaNg/releases/download/1.2.4/AriaNg-1.2.4-AllInOne.zip' user/aria2/Makefile
