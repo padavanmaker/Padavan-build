@@ -58,8 +58,8 @@ jobs:
         #更新软件源码
         sed -i '2c FRP_VER := 0.44.0' user/frp/Makefile                         #更新frp
         sed -i '/htop-3.0.5/{s/3.0.5/3.0.2/}' user/htop/Makefile                #更新htop
-        sed -i '1c SRC_NAME = smartdns-Release37.2' user/smartdns/Makefile        #更新smartdns
-        cp -f $GITHUB_WORKSPACE/smartdns-Release37.2.tar.gz  user/smartdns/smartdns-Release37.2.tar.gz
+        sed -i '1c SRC_NAME = smartdns-Release37.1' user/smartdns/Makefile        #更新smartdns
+        cp -f $GITHUB_WORKSPACE/smartdns-Release37.1.tar.gz  user/smartdns/smartdns-Release37.1.tar.gz
         wget https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-smartdns.conf -O user/smartdns/ad.hosts
         sed -i '4c SRC_ARIA_NG_NAME=AriaNg-1.2.4-AllInOne' user/aria2/Makefile  #更新AriaNg
         sed -i '5c SRC_ARIA_NG_URL=https://github.com/mayswind/AriaNg/releases/download/1.2.4/AriaNg-1.2.4-AllInOne.zip' user/aria2/Makefile
