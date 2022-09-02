@@ -1,5 +1,5 @@
 SRC_NAME = smartdns-Release37.2
-SRC_URL = https://github.com/pymumu/smartdns/archive/refs/tags/(SRC_NAME).tar.gz
+SRC_URL = https://codeload.github.com/pymumu/smartdns/tar.gz/refs/tags/Release37.2
 THISDIR = $(shell pwd)
 
 all: download_test extract_test config_test
