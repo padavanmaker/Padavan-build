@@ -91,6 +91,7 @@ jobs:
         cp -f $GITHUB_WORKSPACE/tailscale/tailscaled  user/tailscale/tailscaled
         sed -i '163c dir_$(CONFIG_FIRMWARE_INCLUDE_TAILSCALE)  += tailscale' user/Makefile
         echo "CONFIG_FIRMWARE_INCLUDE_TAILSCALE=y" >> .config
+        cp -f $GITHUB_WORKSPACE/autostart.sh        user/scripts/autostart.sh
         
         ######开始打包####################################################################################
         sudo ./build_firmware_modify $TNAME 0
