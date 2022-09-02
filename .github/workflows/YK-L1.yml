@@ -58,7 +58,8 @@ jobs:
         sed -i '893,894d' user/rc/net.c                         #修复ios访问bug
         
         ######更新软件源码###############################################################################
-        sed -i '/htop-3.0.5/{s/3.0.5/3.0.2/}' user/htop/Makefile                #更新htop
+        sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile                #更新htop
+        sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.2.tar.gz'
         
         ######恢复基础工具###############################################################################
         sed -i '/_OPENSS/{s/=n/=y/}' .config
