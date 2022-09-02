@@ -59,7 +59,7 @@ jobs:
         
         ######更新软件源码###############################################################################
         sed -i '1c SRC_NAME = htop-3.0.2' user/htop/Makefile                #更新htop
-        sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.2.tar.gz'
+        sed -i '2c SRC_URL = http://sources.buildroot.net/htop/htop-3.0.2.tar.gz' user/htop/Makefile 
         
         ######恢复基础工具###############################################################################
         sed -i '/_OPENSS/{s/=n/=y/}' .config
