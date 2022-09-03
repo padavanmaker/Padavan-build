@@ -59,7 +59,9 @@ jobs:
         sed -i '/LANG_CN/{s/=n/=y/}' .config                    #设置默认语言为中文
         sed -i '7c size_tmp="32M"' user/scripts/dev_init.sh     #调整/tmp分区为32MB
         sed -i '898,899d' user/rc/net.c                         #修复ios访问bug
-        sed -i '952c CONFIG_BLK_DEV_SD=m' configs/boards/NEWIFI-MINI/kernel-3.4.x.config
+        sed -i '/CONFIG_USB/{s/=y/=n/}'   configs/boards/NEWIFI-MINI/kernel-3.4.x.config
+        sed -i '952c CONFIG_BLK_DEV_SD=n' configs/boards/NEWIFI-MINI/kernel-3.4.x.config
+        echo "CONFIG_FIRMWARE_WEBUI_HIDE_VPN=y" >> .config      #Hidevpn
         
         ######更新软件源码###############################################################################
         sed -i '/htop-3.0.5/{s/3.0.5/3.0.2/}' user/htop/Makefile                #更新htop
