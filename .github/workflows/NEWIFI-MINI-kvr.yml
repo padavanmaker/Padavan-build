@@ -75,6 +75,7 @@ jobs:
         sed -i '/HTOP/{s/=n/=y/}' .config
         #sed -i '/IPERF3/{s/=n/=y/}' .config
         sed -i '/TTYD/{s/=n/=y/}' .config
+        sed -i '/ttyd_enable/{s/0/1/}' user/shared/defaults.c
         
         ######默认扩展功能，注释以禁用####################################################################
         sed -i '/SFTP/{s/=n/=y/}' .config         #SFTP文件访问
@@ -85,6 +86,7 @@ jobs:
         sed -i '4c <title><#Web_Title#> - <#menu5_24#></title>' user/www/n56u_ribbon_fixed/Advanced_smartdns.asp
         wget https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-smartdns.conf -O user/smartdns/ad.hosts
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config            #smartdns
+        sed -i '/sdns_enable/{s/0/1/}' user/shared/defaults.c
         
         #######添加tailscale#############################################################################
         mkdir -p user/tailscale 
