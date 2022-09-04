@@ -62,6 +62,7 @@ jobs:
         sed -i '/CONFIG_USB/{s/=y/=n/}'   configs/boards/NEWIFI-MINI/kernel-3.4.x.config
         sed -i '952c CONFIG_BLK_DEV_SD=n' configs/boards/NEWIFI-MINI/kernel-3.4.x.config
         echo "CONFIG_FIRMWARE_WEBUI_HIDE_VPN=y" >> .config      #Hidevpn
+        echo "CONFIG_FIRMWARE_INCLUDE_SFE=y" >> .config
         
         ######更新软件源码###############################################################################
         sed -i '/htop-3.0.5/{s/3.0.5/3.0.2/}' user/htop/Makefile                #更新htop
